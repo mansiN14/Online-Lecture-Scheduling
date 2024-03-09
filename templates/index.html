@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>School Admin Panel</title>
+    <!-- Include Bootstrap CSS from CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Online Lecture Scheduler Admin Panel</h1>
+
+        <!-- Add Course -->
+        <div class="mt-4">
+            <h2>Add Course</h2>
+            <form action="/add_course" method="post">
+                <div class="form-group">
+                    <label>Name:</label>
+                    <input type="text" name="name" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Level:</label>
+                    <input type="text" name="level" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Description:</label>
+                    <textarea name="description" class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Image URL:</label>
+                    <input type="text" name="image" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary">Add Course</button>
+            </form>
+        </div>
+
+        <!-- Add Instructor -->
+        <div class="mt-4">
+            <h2>Add Instructor</h2>
+            <form action="/add_instructor" method="post">
+                <div class="form-group">
+                    <label>Name:</label>
+                    <input type="text" name="name" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary">Add Instructor</button>
+            </form>
+        </div>
+
+        <!-- Assign Lecture -->
+        <div class="mt-4">
+            <h2>Assign Lecture</h2>
+            <form action="/assign_lecture" method="post">
+                <div class="form-group">
+                    <label>Course ID:</label>
+                    <input type="number" name="course_id" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Instructor ID:</label>
+                    <input type="number" name="instructor_id" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Date:</label>
+                    <input type="date" name="date" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary">Assign Lecture</button>
+            </form>
+        </div>
+
+        <!-- List Courses -->
+        <div class="mt-4">
+            <h2>Courses</h2>
+            <ul class="list-group">
+                {% for course in courses %}
+                <li class="list-group-item">{{ course.name }} (Level: {{ course.level }}) - {{ course.description }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- List Instructors -->
+        <div class="mt-4">
+            <h2>Instructors</h2>
+            <ul class="list-group">
+                {% for instructor in instructors %}
+                <li class="list-group-item">{{ instructor.name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Assigned Lectures -->
+        <div class="mt-4">
+            <h2>Assigned Lectures</h2>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Course</th>
+                        <th>Instructor</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for lecture in lectures %}
+                    <tr>
+                        <td>{{ lecture.course.name }}</td>
+                        <td>{{ lecture.instructor.name }}</td>
+                        <td>{{ lecture.date.strftime('%Y-%m-%d') }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
